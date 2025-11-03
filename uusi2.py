@@ -1,1 +1,2 @@
 print("Tämä on uusi tiedosto nimeltä uusi2.py")
+print("Muutos")
