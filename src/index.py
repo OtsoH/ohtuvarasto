@@ -22,17 +22,6 @@ def testaa_mehu_setterit(mehua):
     mehua.ota_varastosta(3.14)
     print(f"Mehuvarasto: {mehua}")
 
-    mehua.lisaa_varastoon(50.7)
-    print(f"Mehuvarasto: {mehua}")
-    print("Otetaan 3.14")
-    mehua.ota_varastosta(3.14)
-    print(f"Mehuvarasto: {mehua}")
-    mehua.lisaa_varastoon(50.7)
-    print(f"Mehuvarasto: {mehua}")
-    print("Otetaan 3.14")
-    mehua.ota_varastosta(3.14)
-    print(f"Mehuvarasto: {mehua}")
-
 def testaa_virhetilanteet():
     print("Virhetilanteita:")
     print("Varasto(-100.0);")
