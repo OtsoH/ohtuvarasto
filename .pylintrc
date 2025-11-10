@@ -1,0 +1,27 @@
+[MAIN]
+ignore=CVS,.git,__pycache__,htmlcov
+
+[MESSAGE CONTROL]
+disable=
+    missing-module-docstring,
+    missing-class-docstring,
+    missing-function-docstring,
+    too-few-public-methods
+
+[FORMAT]
+max-line-length=80
+
+indent-string='    '
+
+[DESIGN]
+max-args=5
+max-attributes=10
+max-statements=10
+
+[REFACTORING]
+max-nested-blocks=2
+
+[BASIC]
+good-names=i,j,k,_
+bad-names=foo,bar,baz
+variable-rgx=[a-z_][a-z0-9_]{1,30}$
