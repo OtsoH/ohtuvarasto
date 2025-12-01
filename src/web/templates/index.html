@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Warehouses - Ohtuvarasto{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Warehouses</h1>
+    <a href="{{ url_for('main.create_warehouse') }}" class="btn btn-primary">Create New Warehouse</a>
+</div>
+
+{% if warehouses %}
+<div class="row">
+    {% for warehouse in warehouses %}
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ warehouse.name }}</h5>
+                <p class="card-text">
+                    <strong>Capacity:</strong> {{ warehouse.capacity }}<br>
+                    <strong>Current Balance:</strong> {{ warehouse.balance }}<br>
+                    <strong>Available Space:</strong> {{ warehouse.capacity - warehouse.balance }}
+                </p>
+                <div class="progress mb-3">
+                    {% set percentage = (warehouse.balance / warehouse.capacity * 100) if warehouse.capacity > 0 else 0 %}
+                    <div class="progress-bar" role="progressbar" style="width: {{ percentage }}%;" aria-valuenow="{{ percentage }}" aria-valuemin="0" aria-valuemax="100">{{ "%.1f"|format(percentage) }}%</div>
+                </div>
+                <a href="{{ url_for('main.view_warehouse', warehouse_id=warehouse.id) }}" class="btn btn-outline-primary btn-sm">View Details</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="alert alert-info">
+    No warehouses yet. <a href="{{ url_for('main.create_warehouse') }}">Create one!</a>
+</div>
+{% endif %}
+{% endblock %}
