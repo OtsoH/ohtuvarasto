@@ -3,36 +3,70 @@
 {% block title %}Warehouses - Ohtuvarasto{% endblock %}
 
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h1>Warehouses</h1>
-    <a href="{{ url_for('main.create_warehouse') }}" class="btn btn-primary">Create New Warehouse</a>
+<div class="page-header d-flex justify-content-between align-items-center">
+    <div>
+        <h1><i class="bi bi-boxes me-2"></i>Warehouses</h1>
+        <p class="mb-0 opacity-75">Manage your warehouse inventory</p>
+    </div>
+    <a href="{{ url_for('main.create_warehouse') }}" class="btn btn-light btn-lg">
+        <i class="bi bi-plus-lg me-2"></i>Create New
+    </a>
 </div>
 
 {% if warehouses %}
-<div class="row">
+<div class="row g-4">
     {% for warehouse in warehouses %}
-    <div class="col-md-4 mb-4">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">{{ warehouse.name }}</h5>
-                <p class="card-text">
-                    <strong>Capacity:</strong> {{ warehouse.capacity }}<br>
-                    <strong>Current Balance:</strong> {{ warehouse.balance }}<br>
-                    <strong>Available Space:</strong> {{ warehouse.capacity - warehouse.balance }}
-                </p>
-                <div class="progress mb-3">
-                    {% set percentage = (warehouse.balance / warehouse.capacity * 100) if warehouse.capacity > 0 else 0 %}
-                    <div class="progress-bar" role="progressbar" style="width: {{ percentage }}%;" aria-valuenow="{{ percentage }}" aria-valuemin="0" aria-valuemax="100">{{ "%.1f"|format(percentage) }}%</div>
+    <div class="col-lg-4 col-md-6">
+        <div class="card warehouse-card h-100">
+            <div class="card-body p-4">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="stat-icon stat-icon-capacity me-3">
+                        <i class="bi bi-box-seam"></i>
+                    </div>
+                    <h4 class="card-title mb-0">{{ warehouse.name }}</h4>
                 </div>
-                <a href="{{ url_for('main.view_warehouse', warehouse_id=warehouse.id) }}" class="btn btn-outline-primary btn-sm">View Details</a>
+                
+                <div class="row g-3 mb-4">
+                    <div class="col-4 text-center">
+                        <div class="text-muted small">Capacity</div>
+                        <div class="fw-bold fs-5">{{ "%.0f"|format(warehouse.capacity) }}</div>
+                    </div>
+                    <div class="col-4 text-center">
+                        <div class="text-muted small">Stored</div>
+                        <div class="fw-bold fs-5 text-success">{{ "%.0f"|format(warehouse.balance) }}</div>
+                    </div>
+                    <div class="col-4 text-center">
+                        <div class="text-muted small">Available</div>
+                        <div class="fw-bold fs-5 text-warning">{{ "%.0f"|format(warehouse.capacity - warehouse.balance) }}</div>
+                    </div>
+                </div>
+                
+                {% set percentage = (warehouse.balance / warehouse.capacity * 100) if warehouse.capacity > 0 else 0 %}
+                {% set bar_class = 'progress-bar-low' if percentage < 50 else ('progress-bar-medium' if percentage < 80 else 'progress-bar-high') %}
+                <div class="progress mb-4">
+                    <div class="progress-bar {{ bar_class }}" role="progressbar" style="width: {{ percentage }}%;" aria-valuenow="{{ percentage }}" aria-valuemin="0" aria-valuemax="100">
+                        {{ "%.1f"|format(percentage) }}%
+                    </div>
+                </div>
+                
+                <a href="{{ url_for('main.view_warehouse', warehouse_id=warehouse.id) }}" class="btn btn-primary w-100">
+                    <i class="bi bi-eye me-2"></i>View Details
+                </a>
             </div>
         </div>
     </div>
     {% endfor %}
 </div>
 {% else %}
-<div class="alert alert-info">
-    No warehouses yet. <a href="{{ url_for('main.create_warehouse') }}">Create one!</a>
+<div class="card">
+    <div class="card-body empty-state">
+        <i class="bi bi-inbox"></i>
+        <h3 class="text-muted">No Warehouses Yet</h3>
+        <p class="text-muted mb-4">Create your first warehouse to get started</p>
+        <a href="{{ url_for('main.create_warehouse') }}" class="btn btn-primary btn-lg">
+            <i class="bi bi-plus-lg me-2"></i>Create Warehouse
+        </a>
+    </div>
 </div>
 {% endif %}
 {% endblock %}

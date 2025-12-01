@@ -15,7 +15,7 @@ class TestWebApp(unittest.TestCase):
         response = self.client.get("/")
         self.assertEqual(response.status_code, 200)
         self.assertIn(b"Warehouses", response.data)
-        self.assertIn(b"No warehouses yet", response.data)
+        self.assertIn(b"No Warehouses Yet", response.data)
 
     def test_create_warehouse(self):
         response = self.client.post("/warehouse/create", data={
@@ -88,4 +88,4 @@ class TestWebApp(unittest.TestCase):
         )
         self.assertEqual(response.status_code, 200)
         self.assertIn(b"deleted successfully", response.data)
-        self.assertIn(b"No warehouses yet", response.data)
+        self.assertIn(b"No Warehouses Yet", response.data)
